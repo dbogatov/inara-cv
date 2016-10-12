@@ -12,6 +12,7 @@ var callback = function () {
 			height: 14,
 		}, 2000);
 	});
+	$("#age").text(age(new Date(1991, 11, 25)) + "yo");
 };
 $(document).ready(callback);
 
@@ -22,3 +23,9 @@ window.onresize = function () {
 		callback();
 	}, 100);
 };
+
+var age = function (birthday) { // birthday is a date
+	var ageDifMs = Date.now() - birthday.getTime();
+	var ageDate = new Date(ageDifMs); // miliseconds from epoch
+	return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
