@@ -2,6 +2,8 @@
 
 set -e
 
+printf "\n\n\n\n-------\n\n"
+
 echo $(date --rfc-3339=seconds)
 
 SOURCE="${BASH_SOURCE[0]}"
@@ -14,9 +16,9 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 cd $DIR
 
-git fetch origin # > /dev/null 2>> deploy.log
-git reset --hard origin/master # > /dev/null 2>> deploy.log
+git fetch origin
+git reset --hard origin/master
 
-bower install # --allow-root > /dev/null 2>> deploy.log
+bower install
 
 curl --request POST 'https://push.dbogatov.org/api/push/deploy' --data "project=Inara-CV"
