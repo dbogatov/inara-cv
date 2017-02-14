@@ -7,7 +7,7 @@ build:
   image: mhart/alpine-node
   stage: build
   script: 
-  - apk add --update bash
+  - apk add --update bash git
   - ./build.sh
   artifacts:
     expire_in: 30 min
