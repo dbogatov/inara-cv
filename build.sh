@@ -6,6 +6,6 @@ echo "Installing node modules... Requires NPM"
 npm install --loglevel=error > /dev/null
 
 echo "Installing Bower libraries... Requires Bower (installed by NPM)"
-$(npm bin)/bower install > /dev/null
+$(npm bin)/bower --allow-root install > /dev/null
 
 echo "Build completed!"
