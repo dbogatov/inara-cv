@@ -1,6 +1,57 @@
-production:
-  type: deploy
+stages:
+- build
+- test
+- release
+
+build:
+  image: mhart/alpine-node
+  stage: build
+  script: 
+  - ./build.sh
+  artifacts:
+    expire_in: 30 min
+    paths:
+    - index.html
+    - js/
+    - css/
+    - img/
+    - bower/
+  tags:
+  - Docker
+
+tidy:
+  image: dbogatov/docker-containers:jekyll-latest
+  stage: test
+  dependencies:
+  - build
+  before_script:
+  - http-server -p 8080 > /dev/null &
+  - sleep 5
   script:
-  - curl --request POST 'https://deploy.dbogatov.org/deploy' --data "token=$TOKEN" --data "project=Inara-CV"
-  only:
-  - master
+  - curl -Ls http://localhost:8080/index.html | tidy -e
+  tags:
+  - Docker
+  
+blc:
+  image: dbogatov/docker-containers:jekyll-latest
+  stage: test
+  dependencies:
+  - build
+  before_script:
+  - http-server -p 8080 > /dev/null &
+  - sleep 5
+  script:
+  - blc --filter-level 3 --input http://localhost:8080/index.html -rog --exclude "*linkedin.*"
+  tags:
+  - Docker
+
+dockerify:
+  stage: release
+  dependencies:
+  - build
+  script:
+  - docker build -t registry.dbogatov.org/dbogatov/inara-cv .
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.dbogatov.org
+  - docker push registry.dbogatov.org/dbogatov/inara-cv
+  tags:
+  - Shell

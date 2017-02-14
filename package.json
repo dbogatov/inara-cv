@@ -1,0 +1,7 @@
+{
+  "name": "Inara-CV",
+  "version": "1.0.0",
+  "devDependencies": {
+    "bower": "^1.8.0"
+  }
+}
