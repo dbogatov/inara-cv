@@ -15,7 +15,7 @@ Deploy the service
 ```
 docker service create \
 	--name inara-cv \
-	--publish 80:8500 \
+	--publish 8500:80 \
 	--constraint 'node.role == worker' \
 	--network internal-network \
 	registry.dbogatov.org/dbogatov/inara-cv
