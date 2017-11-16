@@ -33,18 +33,18 @@ tidy:
   tags:
   - docker
   
-# blc:
-#   image: dbogatov/docker-images:blc-latest
-#   stage: test
-#   dependencies:
-#   - build
-#   before_script:
-#   - http-server -p 8080 > /dev/null &
-#   - sleep 5
-#   script:
-#   - blc --filter-level 3 --input http://localhost:8080/index.html -rog --exclude "*linkedin.*"
-#   tags:
-#   - docker
+blc:
+  image: dbogatov/docker-images:blc-latest
+  stage: test
+  dependencies:
+  - build
+  before_script:
+  - http-server -p 8080 > /dev/null &
+  - sleep 5
+  script:
+  - blc --filter-level 3 --input http://localhost:8080/index.html -rog --exclude "*linkedin.*"
+  tags:
+  - docker
 
 dockerify:
   stage: release
