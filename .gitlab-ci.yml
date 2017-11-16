@@ -18,10 +18,10 @@ build:
     - img/
     - bower/
   tags:
-  - Docker
+  - docker
 
 tidy:
-  image: dbogatov/docker-containers:jekyll-latest
+  image: dbogatov/docker-images:jekyll-latest
   stage: test
   dependencies:
   - build
@@ -31,10 +31,10 @@ tidy:
   script:
   - curl -Ls http://localhost:8080/index.html | tidy -e
   tags:
-  - Docker
+  - docker
   
 blc:
-  image: dbogatov/docker-containers:jekyll-latest
+  image: dbogatov/docker-images:jekyll-latest
   stage: test
   dependencies:
   - build
@@ -44,7 +44,7 @@ blc:
   script:
   - blc --filter-level 3 --input http://localhost:8080/index.html -rog --exclude "*linkedin.*"
   tags:
-  - Docker
+  - docker
 
 dockerify:
   stage: release
@@ -55,4 +55,4 @@ dockerify:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.dbogatov.org
   - docker push registry.dbogatov.org/dbogatov/inara-cv
   tags:
-  - Shell
+  - shell
