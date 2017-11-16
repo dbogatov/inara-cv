@@ -4,7 +4,7 @@ stages:
 - release
 
 build:
-  image: mhart/alpine-node
+  image: dbogatov/docker-images:gulp-bower-latest
   stage: build
   script: 
   - apk add --update bash git
@@ -21,7 +21,7 @@ build:
   - docker
 
 tidy:
-  image: dbogatov/docker-images:jekyll-latest
+  image: dbogatov/docker-images:tidy-latest
   stage: test
   dependencies:
   - build
@@ -34,7 +34,7 @@ tidy:
   - docker
   
 blc:
-  image: dbogatov/docker-images:jekyll-latest
+  image: dbogatov/docker-images:blc-latest
   stage: test
   dependencies:
   - build
